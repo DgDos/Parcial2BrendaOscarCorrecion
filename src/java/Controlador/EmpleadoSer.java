@@ -17,6 +17,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import model.Empleado;
+import model.Nomina;
 
 /**
  *
@@ -51,16 +52,25 @@ public class EmpleadoSer extends HttpServlet {
         }
         if(action.equals("listar")){
             EmpleadoDAO e=new EmpleadoDAO();
-            ArrayList<Empleado> empleados=new ArrayList();
+            ArrayList<Nomina> nominas=new ArrayList();
             try {
-                empleados=e.getAllEmpleados();
+                nominas=e.getAllSalarios();
             } catch (SQLException ex) {
                 Logger.getLogger(EmpleadoSer.class.getName()).log(Level.SEVERE, null, ex);
             }
+            long sena=0,ICBF=0,ccf=0,total=0;
+            for(Nomina n: nominas){
+                sena+=n.getSena();
+                ICBF+=n.getIcbf();
+                ccf+=n.getCcf();
+                total+=n.getCostoTotal();
+            }
+            request.setAttribute("nominas", nominas);
+            request.setAttribute("sena", sena);
+            request.setAttribute("icbf", ICBF);
+            request.setAttribute("ccf", ccf);
+            request.setAttribute("total", total);
             
-            
-            
-            request.setAttribute("empleados", empleados);
             RequestDispatcher rd = getServletContext().getRequestDispatcher("/EmpleadoL.jsp");
             rd.forward(request, response);
         }

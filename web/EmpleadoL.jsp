@@ -4,6 +4,7 @@
     Author     : LabingXEON
 --%>
 
+<%@page import="model.Nomina"%>
 <%@page import="model.Empleado"%>
 <%@page import="java.util.ArrayList"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -13,57 +14,68 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Lista Empleado</title>
     </head>
-    
-    
+
+
     <body>
         <h1>Lista Empleados</h1>
         <br>
         <table class="table">
-                        <thead>
-                            <tr>
-                                <th>Id Empleado </th>
-                                <th>Nombre Empleado</th>
-                                <th>Lugar Nacimiento</th>
-                                <th>Estatus</th>
-                                <th>Fecha Ingreso</th>
-                                <th>Tipo Contrato</th>
-                                <th>Departamento</th>
-                                <th>Puesto</th>
-                                <th>Turno</th>
-                                <th>Sueldo</th>
-                                <th>Regimen</th>
-                                <th>Salario</th>
-                                
-                            </tr>
-                        </thead>
-                        <tbody>
 
-                            <%if (request.getAttribute("empleados") != null) {
-                                    ArrayList<Empleado> array = (ArrayList<Empleado>) request.getAttribute("empleados");
-                                    for (Empleado e : array) {
-                            %>
+            <tr>
+                <td>Id Empleado </td>
+                <td>Nombre Empleado</td>
+                <td>Salario por mes</td>
+                <td>Salario Total</td>
+                <td>Prima</td>
+                <td>Cesantias</td>
+                <td>Intereses sobre Cesantias</td>
+                <td>Vacaciones</td>
+                <td>Salud Empresa</td>
+                <td>Pension Empresa</td>
+                <td>Total Empleado</td>
 
-                            <tr>
-                                <th scope="row"><%=e.getId()%></th>
-                                <td><%=e.getNombre()%></td>
-                                <td><%=e.getLugarN()%></td>
-                                <td><%=(e.getIdE()).getNombre()%></td>
-                                <td><%=e.getFechaI()%></td>
-                                <td><%=(e.getIdTC()).getNombre()%></td>
-                                <td><%=(e.getIdD()).getNombre()%></td>
-                                <td><%=(e.getIdP()).getNombre()%></td>
-                                <td><%=(e.getIdT()).getNombre()%></td>
-                                <td><%=(e.getIdS()).getNombre()%></td>
-                                <td><%=(e.getIdR()).getNombre()%></td>
-                                <td><%=e.getSalario()%></td>
-                            </tr>
+            </tr>
 
-                            <%      }
-                                }
-                            %>
+            <%if (request.getAttribute("nominas") != null) {
+                    ArrayList<Nomina> array = (ArrayList<Nomina>) request.getAttribute("nominas");
+                    for (Nomina e : array) {
+            %>
 
-                        </tbody>
-                    </table>
+            <tr>
+                <td><%=e.getId()%></td>
+                <td><%=e.getNombre()%></td>
+                <td><%=e.getSalario()%></td>
+                <td><%=e.getSalarioT()%></td>
+                <td><%=e.getPrima()%></td>
+                <td><%=e.getCesantias()%></td>
+                <td><%=e.getIntces()%></td>
+                <td><%=e.getVacaciones()%></td>
+                <td><%=e.getSaludE()%></td>
+                <td><%=e.getPensionE()%></td>
+                <td><%=e.getCostoTotal()%></td>
+            </tr>
 
+            <%      }
+                }
+            %>
+
+        </table>
+        <br>
+        <h1>Parafiscales</h1>
+        <table class="table">
+            <tr>
+                <td>Sena</td>
+                <td>ICBF</td>
+                <td>Caja de Compensacion familiar</td>
+            </tr>
+            <tr>
+                <td ><%=request.getAttribute("sena")%></td>
+                <td><%=request.getAttribute("icbf")%></td>
+                <td><%=request.getAttribute("ccf")%></td>
+            </tr>
+        </table>
+            
+            <h1>TOTAL</h1>
+            <p><%=request.getAttribute("total")%></p>
     </body>
 </html>

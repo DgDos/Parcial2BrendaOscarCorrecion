@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import model.Departamento;
 import model.Empleado;
 import model.Estatus;
+import model.Nomina;
 import model.Puesto;
 import model.Regimen;
 import model.Sueldo;
@@ -55,18 +56,27 @@ public class EmpleadoDAO {
         return empleados;
     }
     
-    public ArrayList<Empleado> getAllSalarios() throws SQLException {
-        ArrayList<Empleado> empleados = new ArrayList<>();
+    public ArrayList<Nomina> getAllSalarios() throws SQLException {
+        ArrayList<Nomina> nominas = new ArrayList<>();
         Statement statement = connection.createStatement();
-        ResultSet rs = statement.executeQuery("SELECT empleado.id,empleado.nombre,estatus.nombre as es,Salario FROM (empleado,estatus) WHERE estatus.id=empleado.idE");
+        ResultSet rs = statement.executeQuery("SELECT empleado.id,empleado.nombre,empleado.fechaI,Salario FROM (empleado,estatus) WHERE estatus.id=empleado.idE and estatus.nombre='Activo'");
         while (rs.next()) {
-            Empleado e = new Empleado();
-            e.setId(rs.getInt("id"));
-            e.setNombre(rs.getString("nombre"));
-            e.setIdE(rs.getString("es"));
-            e.setSalario(rs.getFloat("Salario"));
-            empleados.add(e);
+            Nomina n=new Nomina();
+            int id=rs.getInt("id");
+            String nombre=rs.getString("nombre");
+            String fecha=rs.getString("fechaI");
+            float salario=rs.getFloat("Salario");
+            String[] separado = fecha.split("/");
+            int meses=12-Integer.parseInt(separado[1]);
+            int dias=meses*30+30-Integer.parseInt(separado[0]);
+            if(Integer.parseInt(separado[2])!=2017){
+                n=new Nomina(id, nombre, 360, 12, salario);
+            }else{
+                n=new Nomina(id,nombre, dias,meses ,salario);
+            }
+            System.out.println(dias+"LLEGUEEEEEEEEEE"+meses);
+            nominas.add(n);
         }
-        return empleados;
+        return nominas;
     }
 }
