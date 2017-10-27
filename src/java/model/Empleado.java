@@ -18,7 +18,7 @@ public class Empleado {
     }
     private String nombre;
     private String lugarN;
-    private int idE;
+    private String idE;
     private String FechaI;
     private TipoContrato idTC;
     private Departamento idD;
@@ -31,7 +31,7 @@ public class Empleado {
     public Empleado() {
     }
 
-    public Empleado(int id, String nombre, String lugarN, int idE, String FechaI, TipoContrato idTC, Departamento idD, Puesto idP, Turno idT, Sueldo idS, Regimen idR, float Salario) {
+    public Empleado(int id, String nombre, String lugarN, String idE, String FechaI, TipoContrato idTC, Departamento idD, Puesto idP, Turno idT, Sueldo idS, Regimen idR, float Salario) {
         this.id = id;
         this.nombre = nombre;
         this.lugarN = lugarN;
@@ -70,11 +70,11 @@ public class Empleado {
         this.lugarN = lugarN;
     }
 
-    public int getIdE() {
+    public String getIdE() {
         return idE;
     }
 
-    public void setIdE(int idE) {
+    public void setIdE(String idE) {
         this.idE = idE;
     }
 

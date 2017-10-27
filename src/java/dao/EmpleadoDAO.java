@@ -44,13 +44,26 @@ public class EmpleadoDAO {
     public ArrayList<Empleado> getAllEmpleados() throws SQLException {
         ArrayList<Empleado> empleados = new ArrayList<>();
         Statement statement = connection.createStatement();
-        Statement statement2 = connection.createStatement();
-        ResultSet rs = statement.executeQuery("select * from empleado");
+        ResultSet rs = statement.executeQuery("SELECT empleado.id,empleado.nombre,Salario FROM (empleado,estatus) WHERE estatus.id=empleado.idE and estatus.nombre='Activo'");
         while (rs.next()) {
             Empleado e = new Empleado();
             e.setId(rs.getInt("id"));
             e.setNombre(rs.getString("nombre"));
-            e.setIdE(rs.getInt("idE"));
+            e.setSalario(rs.getFloat("Salario"));
+            empleados.add(e);
+        }
+        return empleados;
+    }
+    
+    public ArrayList<Empleado> getAllSalarios() throws SQLException {
+        ArrayList<Empleado> empleados = new ArrayList<>();
+        Statement statement = connection.createStatement();
+        ResultSet rs = statement.executeQuery("SELECT empleado.id,empleado.nombre,estatus.nombre as es,Salario FROM (empleado,estatus) WHERE estatus.id=empleado.idE");
+        while (rs.next()) {
+            Empleado e = new Empleado();
+            e.setId(rs.getInt("id"));
+            e.setNombre(rs.getString("nombre"));
+            e.setIdE(rs.getString("es"));
             e.setSalario(rs.getFloat("Salario"));
             empleados.add(e);
         }

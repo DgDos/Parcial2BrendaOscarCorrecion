@@ -57,6 +57,9 @@ public class EmpleadoSer extends HttpServlet {
             } catch (SQLException ex) {
                 Logger.getLogger(EmpleadoSer.class.getName()).log(Level.SEVERE, null, ex);
             }
+            
+            
+            
             request.setAttribute("empleados", empleados);
             RequestDispatcher rd = getServletContext().getRequestDispatcher("/EmpleadoL.jsp");
             rd.forward(request, response);
